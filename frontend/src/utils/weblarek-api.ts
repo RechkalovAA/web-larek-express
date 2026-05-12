@@ -31,10 +31,11 @@ export type ApiListResponse<Type> = {
 
 	protected handleResponse<T>(response: Response): Promise<T> {
 		if (response.ok) return response.json();
-		else
-			return response
-				.json()
-				.then(data => Promise.reject(data.error ?? response.statusText));
+		return response.json().then(
+			(data: { error?: string; message?: string }) =>
+				Promise.reject(data?.error ?? data?.message ?? response.statusText),
+			() => Promise.reject(response.statusText),
+		);
 	}
 
 	get<T>(uri: string) {
