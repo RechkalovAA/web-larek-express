@@ -35,7 +35,7 @@ export function OrderContacts() {
 			email: orderPersistData.email,
 			phone: orderPersistData.phone
 		});
-	}, [orderPersistData]);
+	}, [orderPersistData, setValuesForm]);
 
 
 	const handleFormSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
