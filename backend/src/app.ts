@@ -4,6 +4,7 @@ import 'dotenv/config';
 import { errors as celebrateErrors } from 'celebrate';
 import cors from 'cors';
 import express from 'express';
+import helmet from 'helmet';
 import mongoose from 'mongoose';
 
 import { MONGODB_URI, PORT } from './config';
@@ -15,8 +16,11 @@ import productsRouter from './routes/products';
 
 const app = express();
 
+const JSON_BODY_LIMIT = '32kb';
+
 app.use(cors());
-app.use(express.json());
+app.use(helmet());
+app.use(express.json({ limit: JSON_BODY_LIMIT }));
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
 async function bootstrap(): Promise<void> {
